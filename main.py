@@ -38,6 +38,29 @@ def get_carros():
         )
     )
 
+# Rota para obter um carro específico pelo ID
+@app.route('/carros/<int:id>', methods=['GET'])
+def get_carro(id):
+    carro = Carro.query.get(id)
+    if carro:
+        return make_response(
+            jsonify(
+                mensagem='Detalhes do carro',
+                carro={
+                    'id': carro.id,
+                    'marca': carro.marca,
+                    'modelo': carro.modelo,
+                    'ano': carro.ano
+                }
+            )
+        )
+    else:
+        return make_response(
+            jsonify(
+                mensagem='Carro não encontrado'
+            ), 404
+        )
+
 # Rota para adicionar um novo carro
 @app.route('/carros', methods=['POST'])
 def create_carro():
@@ -62,6 +85,54 @@ def create_carro():
         )
     )
 
+# Rota para atualizar um carro específico pelo ID
+@app.route('/carros/<int:id>', methods=['PUT'])
+def update_carro(id):
+    carro = Carro.query.get(id)
+    if carro:
+        dados = request.json
+        carro.marca = dados.get('marca', carro.marca)
+        carro.modelo = dados.get('modelo', carro.modelo)
+        carro.ano = dados.get('ano', carro.ano)
+        db.session.commit()
+
+        return make_response(
+            jsonify(
+                mensagem='Carro atualizado com sucesso!',
+                carro={
+                    'id': carro.id,
+                    'marca': carro.marca,
+                    'modelo': carro.modelo,
+                    'ano': carro.ano
+                }
+            )
+        )
+    else:
+        return make_response(
+            jsonify(
+                mensagem='Carro não encontrado'
+            ), 404
+        )
+
+# Rota para excluir um carro específico pelo ID
+@app.route('/carros/<int:id>', methods=['DELETE'])
+def delete_carro(id):
+    carro = Carro.query.get(id)
+    if carro:
+        db.session.delete(carro)
+        db.session.commit()
+
+        return make_response(
+            jsonify(
+                mensagem='Carro excluído com sucesso!'
+            )
+        )
+    else:
+        return make_response(
+            jsonify(
+                mensagem='Carro não encontrado'
+            ), 404
+        )
 
 if __name__ == '__main__':
     app.run()
