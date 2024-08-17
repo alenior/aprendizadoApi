@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início</title>
+    <title>Consultar Carros</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <header>
-        <h1>Sistema de Gestão de Carros</h1>
+        <h1>Consultar Carros</h1>
         <nav>
             <ul>
                 <li><a href="/">Início</a></li>
-                <li><a href="/consulta">Consultar Carros</a></li>
                 <li><a href="/cadastro">Cadastrar Novo Carro</a></li>
                 <li><a href="/editar">Editar Carros</a></li>
                 <li><a href="/excluir">Excluir Carros</a></li>
@@ -20,7 +19,9 @@
         </nav>
     </header>
     <main>
-        <p>Bem-vindo ao sistema de gestão de carros. Use o menu para navegar.</p>
+        <h2>Lista de Carros</h2>
+        <div id="car-list"></div>
     </main>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>

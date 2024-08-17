@@ -23,30 +23,32 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // Função para adicionar um novo carro
-    carForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+    // Adicionar um novo carro (se o formulário existir)
+    if (carForm) {
+        carForm.addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        const formData = newFormData(carForm);
-        const carData = {
-            marca: formData.get('marca'),
-            modelo: formData.get('modelo'),
-            ano: formData.get('ano')
-        };
+            const formData = new FormData(carForm);
+            const carData = {
+                marca: formData.get('marca'),
+                modelo: formData.get('modelo'),
+                ano: formData.get('ano')
+            };
 
-        fetch('/carros', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(carData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            loadCars();
-            carForm.reset();
+            fetch('/carros', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(carData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadCars();
+                carForm.reset();
+            });
         });
-    });
+    }
 
     // Função para excluir um carro
     window.deleteCar = function(id) {
@@ -84,5 +86,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
-    // Carregar a lista de carros ao iniciarloadCars();
+    // Carregar a lista de carros ao iniciar
+    if (carList) {
+        loadCars();
+    }
 });
