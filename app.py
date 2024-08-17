@@ -1,4 +1,4 @@
-from flask import Flask, make_response, jsonify, request
+from flask import Flask, render_template, make_response, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -18,6 +18,10 @@ class Carro(db.Model):
     marca = db.Column(db.String(50), nullable=False)
     modelo = db.Column(db.String(50), nullable=False)
     ano = db.Column(db.Integer, nullable=False)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 # Rota para obter a lista de carros
 @app.route('/carros', methods=['GET'])
